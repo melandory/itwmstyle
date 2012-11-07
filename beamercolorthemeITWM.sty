@@ -1,0 +1,26 @@
+% Copyright 2008 by Richard Welke
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+
+% first define the Fraunhofer CD colors, as proposed in the ITWM Wiki
+% The colors are taken from the official ITWM wiki page as of 2008-10-17
+\definecolor{FhGgreen}{RGB}{7,154,121}
+\definecolor{FhGred}{RGB}{199,51,38}
+\definecolor{FhGblue}{RGB}{0,149,214}
+\definecolor{FhGorange}{RGB}{229,175,44}
+\definecolor{FhGyellow}{RGB}{255,236,0}
+\definecolor{FhGgray}{RGB}{168,175,175}
+
+% Now we are to modify the default color theme. This is done in presentation 
+% mode only. TODO: Do we want to change colors for other modes (e.g. handouts)
+% as well?
+ \mode<presentation>
+ 
+ \setbeamercolor{structure}{fg=black}
+\setbeamercolor{alerted text}{fg=FhGgreen}
+
+ \mode
+<all>

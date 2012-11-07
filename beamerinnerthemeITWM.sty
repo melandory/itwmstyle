@@ -1,0 +1,110 @@
+% Copyright 2010 by Fraunhofer ITWM (last change: 11 January 2011)
+%
+%  This style file was developed by
+% Martin Berger, Alexander Dreyer, Simone Gramsch, Johan de Kock, Gerald Kroisandt,
+% Stefan Lorenz, Volker Maag, Jan Marburger, Uwe Nowak, Martin Pieper, Matthias Schäfer, 
+% Richard Welke, Jörg Wenzel.
+%
+% For questions please refer to Simone Gramsch.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\mode<presentation>
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page style: ITWM
+\setbeamertemplate{title page}[ITWM]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page layout for ITWM style
+% Set frame number back to 1 since title page does not count
+\defbeamertemplate*{title page}{ITWM}[1][]
+{
+\leavevmode%
+\vskip-5mm
+\vbox{%
+	\color{FhGgreen}{\rule{115mm}{2pt}} 
+% 	\vskip1.5em%
+%     	\begin{beamercolorbox}[wd=\paperwidth,sep=8pt,center,#1]{title}
+% 	\begin{minipage}[t][7.5ex][t]{\textwidth}
+% 	\vspace*{1mm}
+% 	\begin{flushleft}
+%  	{\usebeamerfont{title}\inserttitle\par}%
+% 	\end{flushleft}
+% 	\end{minipage}
+%       	\vskip0.25em%
+%     	\end{beamercolorbox}%
+% 	\vskip1em%
+% 
+% 	\ifx\insertsubtitle%
+% 	      \@empty{\usebeamerfont{subtitle}\vskip1.25em}%
+%     	\else%
+%       	\begin{beamercolorbox}[wd=\textwidth,ht=14pt]{title}
+%         {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+%       	\end{beamercolorbox}%
+%    	 \fi%
+%  	\centering \color{FhGgreen}{\rule{115mm}{1pt}}  
+% 	\ifx\insertdate%
+% 	      \@empty{\usebeamerfont{subtitle}\vskip1.25em}%
+%     	\else%
+%       	\begin{beamercolorbox}[wd=\textwidth,ht=14pt]{title}
+%         {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertdate\par}%
+%       	\end{beamercolorbox}%
+%    	 \fi% 	
+%         
+%         \ifx\insertauthor%
+% 	      \@empty{\usebeamerfont{subtitle}\vskip1.25em}%
+%     	\else%
+%       	\begin{beamercolorbox}[wd=\textwidth,ht=14pt]{title}
+%         {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertauthor\par}%
+%       	\end{beamercolorbox}%
+%    	 \fi% 	
+% 
+% % 
+% 
+%  	\vskip35mm%
+%         \centering {\color{FhGgreen}{\rule{115mm}{1pt}}}
+%     	\vskip2.4mm%
+% 	\hfill\includegraphics[width=20mm]{logo_neu}
+%     	\vskip2mm%
+
+
+
+   \vbox{}
+  \vfill
+  \begin{centering}
+    \begin{beamercolorbox}[wd=\paperwidth,sep=8pt,center,#1]{title page header}
+      \usebeamerfont{title}\inserttitle\par%
+      \ifx\insertsubtitle\@empty%
+      \else%
+        \vskip0.25em%
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+      \fi%     
+    \end{beamercolorbox}%
+    \color{FhGgreen}{\rule{115mm}{2pt}} 
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=8pt,center,#1]{author}
+      \usebeamerfont{author}\insertauthor
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=8pt,center,#1]{institute}
+      \usebeamerfont{institute}\insertinstitute
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=8pt,center,#1]{date}
+      \usebeamerfont{date}\insertdate
+    \end{beamercolorbox}\vskip3em
+  \centering {\color{FhGgreen}{\rule{115mm}{1pt}}}
+    	\vskip2.4mm%
+    {\usebeamercolor[fg]{titlegraphic}\hfill\includegraphics[width=20mm]{logo_neu}\par}
+  \end{centering}
+  \vfill
+
+}
+\vfill
+\setcounter{framenumber}{0}
+}
+
+\mode
+<all>

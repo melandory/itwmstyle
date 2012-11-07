@@ -1,0 +1,321 @@
+% Copyright 2010 by Fraunhofer ITWM (last change: 11 January 2011)
+%
+%  This style file was developed by
+% Martin Berger, Alexander Dreyer, Simone Gramsch, Johan de Kock, Gerald Kroisandt,
+% Stefan Lorenz, Volker Maag, Jan Marburger, Uwe Nowak, Martin Pieper, Matthias Schäfer, 
+% Richard Welke, Jörg Wenzel.
+%
+% For questions please refer to Simone Gramsch.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\mode<presentation>
+
+\usefonttheme{default}
+\usecolortheme{ITWM}
+\useinnertheme{ITWM}
+\useoutertheme{default}
+
+\RequirePackage{pifont} % fuer Aufzaehlungen
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Umgebungen: Auf jeden Fall nur eine Beta-Version!
+
+\setbeamerfont{block title}{series=\bfseries}
+\setbeamercolor{block title}{bg=FhGgreen}
+\setbeamercolor{block body}{bg=block title.bg!50!bg}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Required since the title page has to be without footline...
+\RequirePackage{ifthen}
+
+
+\setbeamertemplate{navigation symbols}{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Definition of headline
+\setbeamertemplate{headline}
+{
+  \leavevmode%
+  \vbox{
+  \vspace{5mm}
+  \centering
+  \color{FhGgreen}{\rule{115.5mm}{0pt}}
+  }
+ \vskip0pt%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Definition of footline with
+%   - Pagenumber
+%   - Logo
+%   - Distinction of cases for title page or any other page
+\newcommand{\footlinetext}[1]{\setbeamertemplate{footlineText}{#1~}}
+\setbeamertemplate{footline}
+{
+  \leavevmode%
+  \begin{beamercolorbox}[ht=20mm]{footline}%
+    \ifthenelse{\equal{\value{page}}{1}}{%
+      \vspace{7mm}
+    }{%
+      {\hspace{6mm} \color{FhGgreen}{\rule{115.5mm}{1pt}}}% 
+      \vskip1mm%
+     \hskip6mm \ifbeamertemplateempty{footlineText}{}{\color{FhGgray}{ \usebeamertemplate{footlineText}}}\insertframenumber\hskip10.5mm~%
+      \vskip0.1mm%
+      \hfill\includegraphics[width=20mm]{logo_neu}\rule{7mm}{0pt}%
+      \vskip2.75mm%
+    }%
+  \end{beamercolorbox}%
+  \vskip0pt%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Templates for itemize-environment
+\makeatletter
+\renewcommand{\itemize}[1][]{%renew itemize to prevent decreasing font size
+  \beamer@ifempty{#1}{}{\def\beamer@defaultospec{#1}}%
+  \ifnum \@itemdepth >4\relax\@toodeep\else
+    \advance\@itemdepth\@ne%\@itemdepth\@ne
+    \beamer@computepref\@itemdepth% sets \beameritemnestingprefix
+    %\usebeamerfont{itemize/enumerate \beameritemnestingprefix body}%
+    \usebeamercolor[fg]{itemize/enumerate \beameritemnestingprefix body}%
+    \usebeamertemplate{itemize/enumerate \beameritemnestingprefix body begin}%
+    \list
+      {\usebeamertemplate{itemize \beameritemnestingprefix item}}
+      { 
+        \setlength\leftmargini{0em}
+		\setlength\leftmarginii{1.4em}
+		\setlength\leftmarginiii{1.4em}
+		\setlength\leftmargin{1.3em}			% TODO: This should be obtained dynamically
+		\setlength\itemindent{-\leftmargin}%
+      }
+  \fi%
+  \beamer@cramped%
+  \raggedright%
+  \beamer@firstlineitemizeunskip%
+}
+\makeatother
+%set presymbols for different levels
+\setbeamertemplate{itemize item}{\fontsize{8pt}{\baselineskip}\color{FhGgreen}{\ding{110}}}
+\setbeamertemplate{itemize subitem}{\fontsize{8pt}{\baselineskip}\color{FhGgray}{\ding{110}}}
+\setbeamertemplate{itemize subsubitem}{\fontsize{8pt}{\baselineskip}\color{FhGgray}{\ding{110}}}
+
+%Templates for enumerate environment
+\makeatletter
+\def\enumerate{%
+  \ifnum\@enumdepth>2\relax\@toodeep
+  \else%
+    \advance\@enumdepth\@ne%
+    \edef\@enumctr{enum\romannumeral\the\@enumdepth}%
+    \advance\@itemdepth\@ne%
+  \fi%
+  \beamer@computepref\@enumdepth% sets \beameritemnestingprefix
+  \edef\beamer@enumtempl{enumerate \beameritemnestingprefix item}%
+  \@ifnextchar[{\beamer@@enum@}{\beamer@enum@}}
+\def\beamer@@enum@[{\@ifnextchar<{\beamer@enumdefault[}{\beamer@@@enum@[}}
+\def\beamer@enumdefault[#1]{\def\beamer@defaultospec{#1}%
+  \@ifnextchar[{\beamer@@@enum@}{\beamer@enum@}}
+\def\beamer@@@enum@[#1]{% partly copied from enumerate.sty
+  \@enLab{}\let\@enThe\@enQmark
+  \@enloop#1\@enum@
+  \ifx\@enThe\@enQmark\@warning{The counter will not be printed.%
+    ^^J\space\@spaces\@spaces\@spaces The label is: \the\@enLab}\fi
+  \def\insertenumlabel{\the\@enLab}
+  \def\beamer@enumtempl{enumerate mini template}%
+  \expandafter\let\csname the\@enumctr\endcsname\@enThe
+  \csname c@\@enumctr\endcsname7
+  \expandafter\settowidth
+            \csname leftmargin\romannumeral\@enumdepth\endcsname
+            {\the\@enLab\hspace{\labelsep}}%
+  \beamer@enum@}
+\def\beamer@enum@{%
+  \beamer@computepref\@itemdepth% sets \beameritemnestingprefix
+  %\usebeamerfont{itemize/enumerate \beameritemnestingprefix body}%
+  \usebeamercolor[fg]{itemize/enumerate \beameritemnestingprefix body}%
+  \usebeamertemplate{itemize/enumerate \beameritemnestingprefix body begin}%
+  \expandafter
+   \list
+      {\usebeamertemplate{\beamer@enumtempl}}
+      {\usecounter\@enumctr%
+       \setlength\leftmargin{1.5em}       % TODO: This should be obtained dynamically
+	   \setlength\itemindent{-\leftmargin}
+      }%
+  \beamer@cramped%
+  \raggedright%
+  \beamer@firstlineitemizeunskip%
+}
+\def\endenumerate{\ifhmode\unskip\fi\endlist%
+   \usebeamertemplate{itemize/enumerate \beameritemnestingprefix body end}}
+
+\def\beamer@computepref#1{%
+  \let\beameritemnestingprefix\@empty%
+  \ifcase#1\or\or\def\beameritemnestingprefix{sub}\or\def\beameritemnestingprefix{subsub}\or\@toodeep\fi%
+}
+%set numberstyle for enumeration
+\setbeamertemplate{enumerate item}{\color{FhGgreen}\arabic{enumi}.}
+\setbeamertemplate{enumerate subitem}{\color{FhGgray}\arabic{enumii}.}
+\setbeamertemplate{enumerate subsubitem}{\color{FhGgray}\arabic{enumiii}.}
+
+\setlength\leftmargini  {0em}
+\setlength\leftmarginii  {1.5em}
+\setlength\leftmarginiii  {1.5em}
+\setlength  \labelsep  {0.7em}
+\setlength  \labelwidth{\leftmargini}
+\addtolength\labelwidth{-\labelsep}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamersize{text margin left=7mm, text margin right=7mm}
+\setbeamerfont{frametitle}{series=\normalfont\bfseries\sffamily,size=\large}
+\setbeamerfont{title}{series=\normalfont\bfseries\sffamily,size=\LARGE}
+\setbeamerfont{subtitle}{series=\normalfont\sffamily,size=\normalsize}
+\setbeamerfont{normal text}{series=\normalfont\rmfamily,size=\normalsize}
+\setbeamerfont{footline}{series=\normalfont\sffamily,size=\tiny}
+
+\setbeamertemplate{frametitle}
+{%
+  \leavevmode%
+  \vskip-1em%
+	\begin{minipage}[t][4ex][t]{\textwidth}
+	\raggedright
+	\insertframetitle
+	\end{minipage}
+  \vskip1em
+}
+
+\makeatletter
+%left : right = 1/3 : 2/3
+%\setbeamersize{text margin left = 46mm}
+% The new command \keypar{KEYWORD}{PARAGRAPH TEXT}, where the KEYWORD is written in the left margin
+% and the PARAGRAPH TEXT is located at the normal spot
+\newlength{\leftparsep}
+\setlength{\leftparsep}{35.5mm}
+\newlength{\leftparwidth}
+\setlength{\leftparwidth}{33mm}
+\newlength{\leftpargap}
+\setlength{\leftpargap}{2.5mm}
+\newlength{\rightparwidth}
+\setlength{\rightparwidth}{70.5mm}
+\newlength{\totalparwidth}
+\setlength{\totalparwidth}{108mm}
+%The frameslide environment must be redefined in order to use shrink
+%Only change is, that the shrink factors are reset if they are not used
+\renewenvironment{beamer@frameslide}{%
+  \ifbeamer@autobreak\else%
+    \ifx\beamer@againname\@empty%
+      {\let\@elt\beamer@restorecounter\beamer@overlaycounterresets}%
+    \else%
+      {\let\@elt\beamer@labelrestorecounter\beamer@overlaycounterresets}%      
+    \fi%
+  \fi%
+  \global\c@beamerpauses=1\relax%
+  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{%
+    \refstepcounter{subsectionslide}%
+    \xdef\beamer@framestartpage{\the\c@page}% only first time
+  }{\clearpage\beamer@notesactions}% cleanup from previous slide
+  \hypersetup{pdfpagetransition=R}%
+  \hypersetup{pdfpageduration=}%
+  \xdef\beamer@frameendpage{\the\c@page}% every time
+  \beamer@setuplinks%
+  \beamer@displaybreak%
+  \global\setbox\beamer@zoombox=\box\voidb@x%
+  \def\beamer@zoomer{}%
+  \beamer@slidehaszoomfalse%
+  \gdef\insertframetitle{}%
+  \gdef\insertframesubtitle{}%
+  \gdef\beamer@frametitle{}%
+  \gdef\beamer@shortframetitle{}%
+  \gdef\beamer@framesubtitle{}%
+  \let\beamer@startcomment=\beamer@startcommentinframe%
+  % Start slide:
+  \beamer@framenotesbegin%
+    \global\setbox\beamer@framebox=\vbox\bgroup%
+    \beamer@inframetrue%
+    \let\frame=\framelatex% inside frames, use LaTeX's \frame command
+    \begin{beamer@framepauses}%
+     \ifbeamer@shrink%
+        \hsize=\beamer@shrinkfactorinv\hsize%
+        \textwidth=\beamer@shrinkfactorinv\textwidth%
+        \linewidth=\beamer@shrinkfactorinv\linewidth%
+     \else %This else-condition is the only change for FHG-style
+     		\edef\beamer@shrinkpercentage{0}%
+  			\edef\beamer@shrinkfactor{1}%
+  			\edef\beamer@shrinkfactorinv{1}%
+     \fi%
+      % Insert labels if necessary:
+      \ifx\beamer@againname\@empty\else%
+        \nointerlineskip\vbox to0pt{\vss%
+        \label<\the\beamer@slideinframe>{\beamer@againname<\the\beamer@slideinframe>}%
+        \ifnum\beamer@slideinframe=1\relax%
+          \label<1>{\beamer@againname}%
+        \fi%
+        }\nointerlineskip%
+      \fi%
+      \ifx\beamer@framehypertargets\@empty\else%
+        \nointerlineskip\vbox to0pt{\vss%
+          \beamer@framehypertargets%
+          \global\let\beamer@framehypertargets\@empty%
+        }\nointerlineskip%
+      \fi%
+      \vskip-\parskip\vbox{}%
+      \beamer@initfirstlineunskip%
+      \ifbeamer@plainframe\nointerlineskip\fi%
+    \beamer@checkframetitle}%
+    {\end{beamer@framepauses}%
+  \egroup%
+  \ifx\beamer@frametitle\@empty%
+    \setbox\beamer@frametitlebox=\box\voidb@x%
+  \else%
+    \setbox\beamer@frametitlebox=\vbox{%
+      \vbox{}%
+      {\parskip0pt\usebeamertemplate***{frametitle}\vskip0.25em}%
+    }%
+  \fi%
+  \ifbeamer@plainframe%
+    \beamer@frametextheight=\paperheight%
+  \else%
+    \beamer@frametextheight=\textheight%
+  \fi%
+  \advance\beamer@frametextheight by-\ht\beamer@frametitlebox%
+  \advance\beamer@frametextheight by-\dp\beamer@frametitlebox%
+  \advance\beamer@frametextheight by-\beamer@frametopskip%
+  \ifbeamer@shrink%
+    \beamer@shrinkframebox%
+  \fi%
+  \ifx\beamer@zoomer\@empty  
+    \setbox\beamer@framebox=\vbox{%
+      \nobreak\vbox{}\nobreak\par\nobreak\beamer@entrycode\nobreak%
+      \nointerlineskip\unvbox\beamer@frametitlebox%
+      \nobreak%
+      \ifbeamer@autobreak%
+        \vskip\beamer@frametopskipautobreak%
+      \else%
+        \vskip\beamer@frametopskip%
+      \fi%
+      \nobreak%
+      \nointerlineskip\box\beamer@zoombox\nointerlineskip%
+      \nobreak%
+      \ifbeamer@slidehaszoom\box\beamer@framebox\else\unvbox\beamer@framebox\fi%
+      % bottom skip is added in autobreakframebox
+    }%
+    \beamer@autobreakframebox%
+  \else%
+    \beamer@zoomer%
+  \fi%
+  \beamer@undolabels%
+  \beamer@framenotesend%
+  \box\beamer@framebox
+  }
+
+
+\newcommand{\keypar}[2]{\hfuzz=9pt\parbox[t]{\beamer@shrinkfactorinv\leftparwidth}{\raggedright #1}\hspace*{\beamer@shrinkfactorinv\leftpargap}\parbox[t]{\beamer@shrinkfactorinv\rightparwidth}{#2}\newline}
+% The new command \widepar{} creates a paragraph covering the whole width of the slide
+\newcommand{\widepar}[1]{\hfuzz=9pt\parbox[t]{\beamer@shrinkfactorinv\totalparwidth}{#1}}
+\makeatother
+
+\mode
+<all>
